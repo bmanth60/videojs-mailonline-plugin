@@ -888,6 +888,7 @@ VPAIDIntegrator.prototype._addSkipButton = function (adUnit, vastResponse, next)
 	// EN - support publisher SKIP settings
 	// **** Local Function **** //
 	function pubAddSkipButtonToPlayer (player, skipOffset) {
+    logger.debug('VPAID skip button created with... ', 'Offset: ', skipOffset, 'Current Time: ', player.currentTime());
 	  var skipButton = pubCreateSkipButton(player);
 	  var updateSkipButton = pubUpdateSkipButtonState.bind(that, skipButton, skipOffset);
 

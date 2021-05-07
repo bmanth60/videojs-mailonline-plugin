@@ -230,6 +230,7 @@ VASTIntegrator.prototype._addSkipButton = function addSkipButton (source, tracke
 
   // **** Local function **** //
   function addSkipButtonToPlayer (player, skipOffset) {
+    logger.debug('Skip button created with... ', 'Offset: ', skipOffset, 'Current Time: ', player.currentTime());
     var skipButton = createSkipButton(player);
     var updateSkipButton = updateSkipButtonState.bind(that, skipButton, skipOffset, player);
 
