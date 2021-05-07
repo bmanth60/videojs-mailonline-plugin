@@ -17,19 +17,25 @@ playerUtils.getPlayerSnapshot = function getPlayerSnapshot (player) {
   var tech = player.el().querySelector('.vjs-tech');
 
   var snapshot = {
-    ended: player.ended(),
-    src: player.currentSrc() || player.src(),
-    currentTime: player.currentTime(),
-    type: player.currentType(),
-    playing: !player.paused(),
-    suppressedTracks: getSuppressedTracks(player)
+    ended: false,
+    src: '',
+    currentTime: 0,
+    type: '',
+    playing: false,
+    suppressedTracks: [],
   };
 
-  logger.debug('generated snapshot...', snapshot);
+  player.ready(() => {
+    // we need to wait for player to be ready to get the correct player params
+    snapshot.ended = player.ended();
+    snapshot.src = player.currentSrc() || player.src();
+    snapshot.currentTime = snapshot.ended ? player.duration() + 1 : player.currentTime();
+    snapshot.type = player.currentType();
+    snapshot.playing = !player.paused();
+    snapshot.suppressedTracks = getSuppressedTracks(player);
 
-  if (snapshot.ended) {
-    snapshot.currentTime = player.duration() + 1;
-  }
+    logger.debug('generated snapshot...', snapshot);
+  })
 
   if (tech) {
     snapshot.nativePoster = tech.poster;
@@ -59,6 +65,7 @@ playerUtils.getPlayerSnapshot = function getPlayerSnapshot (player) {
       snapshot.dockText.style.display = 'none';
     }
   }
+
   return snapshot;
 
   // **** Local Functions **** //
