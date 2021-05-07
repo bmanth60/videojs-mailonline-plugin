@@ -18,7 +18,7 @@ playerUtils.getPlayerSnapshot = function getPlayerSnapshot (player) {
 
   var snapshot = {
     ended: player.ended(),
-    src: player.currentSrc(),
+    src: player.currentSrc() || player.src(),
     currentTime: player.currentTime(),
     type: player.currentType(),
     playing: !player.paused(),
